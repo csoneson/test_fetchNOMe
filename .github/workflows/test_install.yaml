@@ -1,0 +1,36 @@
+on: 
+  push
+
+name: testinstall
+
+jobs:
+  testinstall:
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }}
+        
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {os: macOS-latest, bioc: 'release'}
+        - {os: windows-latest, bioc: 'release'}
+        - {os: ubuntu-latest, bioc: 'release'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_FORCE_SUGGESTS_: false
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v2
+
+      - name: Set up R and install BiocManager
+        uses: grimbough/bioc-actions/setup-bioc@v1
+        with:
+          bioc-version: ${{ matrix.config.bioc }}
+      
+      - name: Install package
+        run: |
+            devtools::install_github("fmi-basel/gpeters-fetchNOMe")
