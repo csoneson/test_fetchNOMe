@@ -30,6 +30,12 @@ jobs:
         uses: grimbough/bioc-actions/setup-bioc@v1
         with:
           bioc-version: ${{ matrix.config.bioc }}
+
+      - name: Install system dependencies
+        if: ${{ (runner.os == 'Linux') }}
+        run: |
+          sudo apt-get update && sudo apt-get -y -qq install libcurl4-openssl-dev
+        shell: bash
       
       - name: Install package
         run: |
