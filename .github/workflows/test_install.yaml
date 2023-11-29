@@ -34,6 +34,8 @@ jobs:
       - name: Install package
         run: |
             install.packages("devtools")
-            devtools::install_github("fmi-basel/gpeters-fetchNOMe")
+            BiocManager::install(c("Rsamtools", "GenomicRanges", "IRanges", "GenomeInfoDb", 
+                                   "Rhtslib", "zlibbioc"))
+            BiocManager::install("fmi-basel/gpeters-fetchNOMe")
         shell: Rscript {0}
         
