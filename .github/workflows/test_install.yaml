@@ -34,3 +34,5 @@ jobs:
       - name: Install package
         run: |
             devtools::install_github("fmi-basel/gpeters-fetchNOMe")
+        shell: Rscript {0}
+        
